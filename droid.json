@@ -1,0 +1,13 @@
+{
+  "name": "gitbot",
+  "script": "index.js",
+  "actions": [
+    {
+      "function": "assignPr",
+      "aliases": ["assign :repo([^\\s]+)#:pr([^\\s]+) to :user([^\\s]+)"],
+      "acls": {
+        "mention": true
+      }
+    }
+  ]
+}

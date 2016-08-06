@@ -1,0 +1,24 @@
+{
+  "name": "wt-github",
+  "version": "1.0.0",
+  "description": "Webtask to manage GitHub organizations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Verlic/wt-github.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Verlic/wt-github/issues"
+  },
+  "homepage": "https://github.com/Verlic/wt-github#readme",
+  "dependencies": {
+    "github": "^2.4.0",
+    "promise": "^7.1.1"
+  }
+}
