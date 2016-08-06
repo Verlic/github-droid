@@ -45,6 +45,9 @@ module.exports = function(context) {
         }).catch(function(err) {
           return res.text('Unable to assign user to Pull Request.\n```' + JSON.stringify(err, null, 2) + '```').send();
         });
+    },
+    help: function(req, res) {
+      return res.text('Use `assign {repo}#{pr-number} to {github-user}` to assign a user to a Pull Request').send();
     }
   };
 };

@@ -8,6 +8,13 @@
       "acls": {
         "mention": true
       }
+    },
+    {
+      "function": "help",
+      "aliases": ["help"],
+      "acls": {
+        "mention": true
+      }
     }
   ]
 }
