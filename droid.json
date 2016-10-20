@@ -10,6 +10,14 @@
       }
     },
     {
+      "function": "merged",
+      "aliases": ["merged :repo([^\\s]+) :relative([^\\s]+)"],
+      "acls": {
+        "explicitMention": true
+      },
+      "premessage": "_Searching PRs_"
+    },
+    {
       "function": "help",
       "aliases": ["help"],
       "acls": {

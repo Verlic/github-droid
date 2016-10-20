@@ -1,6 +1,8 @@
 # Env
 .env
 
+test.js
+
 # Logs
 logs
 *.log
