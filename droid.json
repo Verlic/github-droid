@@ -4,22 +4,41 @@
   "actions": [
     {
       "function": "assignPr",
-      "aliases": ["assign :repo([^\\s]+)#:pr([^\\s]+) to :user([^\\s]+)"],
+      "aliases": [
+        "assign :repo([^\\s]+)#:pr([^\\s]+) to :user([^\\s]+)"
+      ],
       "acls": {
         "mention": true
       }
     },
     {
       "function": "merged",
-      "aliases": ["merged :repo([^\\s]+) :relative([^\\s]+)"],
+      "help": "`merged {repo} {hour|day|week}`: returns merged PRs in a relative time frame",
+      "aliases": [
+        "merged :repo([^\\s]+) :relative([^\\s]+)"
+      ],
       "acls": {
         "explicitMention": true
       },
       "premessage": "_Searching PRs_"
     },
     {
+      "function": "isProtected",
+      "aliases": [
+        "get protection :repo([^\\s]+) :branch([^\\s]+)",
+        "is protected :repo([^\\s]+) :branch([^\\s]+)"
+      ],
+      "help": "`get protection {repo} {branch}`: returns branch protection settings",
+      "acls": {
+        "explicitMention": true
+      },
+      "premessage": "_Getting branch protection settings..._"
+    },
+    {
       "function": "help",
-      "aliases": ["help"],
+      "aliases": [
+        "help"
+      ],
       "acls": {
         "mention": true
       }

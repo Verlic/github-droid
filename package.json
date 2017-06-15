@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/Verlic/wt-github#readme",
   "dependencies": {
-    "github": "^2.6.0",
+    "github": "^9.2.0",
     "moment": "^2.15.1",
     "promise": "^7.1.1"
   }

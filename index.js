@@ -17,7 +17,7 @@ var GitHubApi = require('github'),
 
   editIssue = promise.denodeify(github.issues.edit);
 
-module.exports = function(context) {
+module.exports = function (context) {
   var token = context.config.GITHUB_TOKEN;
   var organization = context.config.ORGANIZATION || 'auth0';
 
@@ -28,7 +28,7 @@ module.exports = function(context) {
   });
 
   return {
-    assignPr: function(req, res) {
+    assignPr: function (req, res) {
       var repo = req.params.repo;
       var pr = req.params.pr;
       var user = req.params.user;
@@ -41,13 +41,13 @@ module.exports = function(context) {
       };
 
       editIssue(payload)
-        .then(function() {
+        .then(function () {
           return res.text(`_User ${user} assigned to ${repo}#${pr}_`).send();
-        }).catch(function(err) {
+        }).catch(function (err) {
           return res.text('Unable to assign user to Pull Request.\n```' + JSON.stringify(err, null, 2) + '```').send();
         });
     },
-    merged: function(req, res) {
+    merged: function (req, res) {
       var repo = req.params.repo;
       var relative = req.params.relative.toLowerCase();
       relative = relative === 'today' || relative === 'yesterday' ? 'day' : relative;
@@ -66,8 +66,8 @@ module.exports = function(context) {
           fields: []
         };
 
-        prs.forEach(function(pr) {
-          attachment.fields.push({value: `<${pr.html_url}|${pr.title}>`, short: false});
+        prs.forEach(function (pr) {
+          attachment.fields.push({ value: `<${pr.html_url}|${pr.title}>`, short: false });
         });
 
         if (prs.length === 0) {
@@ -82,7 +82,7 @@ module.exports = function(context) {
           return res.text('Unable to retrieve the merged PRs\n```' + JSON.stringify(err) + '```').send();
         }
 
-        prs = prs.concat(response.items);
+        prs = prs.concat(response.data.items);
         if (github.hasNextPage(response)) {
           github.getNextPage(response, getPrs);
         } else {
@@ -92,8 +92,38 @@ module.exports = function(context) {
 
       github.search.issues(payload, getPrs);
     },
-    help: function(req, res) {
-      return res.text('Use `assign {repo}#{pr-number} to {github-user}` to assign a user to a Pull Request').send();
+    isProtected: function (req, res) {
+      var payload = {
+        owner: organization,
+        repo: req.params.repo,
+        branch: req.params.branch
+      };
+
+      github.repos.getBranchProtection(payload)
+        .then((result) => {
+          return res.text('```' + JSON.stringify(result.data, null, 2) + '```').send();
+        })
+        .catch((e) => {
+          if (e.message) {
+            return res.text(':warning: ' + JSON.parse(e.message).message).send();
+          }
+
+          return res.text('An error has occurred.').send();
+        });
+    },
+    help: function help(req, res) {
+      var metadata = require('./droid.json');
+
+      var actionsWithDescription = metadata.actions.filter((action) => {
+        return action.help;
+      }).map((action) => action.help);
+
+      if (actionsWithDescription.length === 0) {
+        return res.text('No help available').send();
+      }
+
+      console.log(actionsWithDescription);
+      return res.text('Help:\n- ' + actionsWithDescription.join('\n- ')).send();
     }
   };
 };
